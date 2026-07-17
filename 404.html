@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Threat Not Found · Mohamed Saleh</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c0b09">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230c0b09'/><text x='50%25' y='55%25' font-family='Georgia,serif' font-style='italic' font-weight='600' font-size='15' fill='%23c9a35f' text-anchor='middle' dominant-baseline='middle'>ms</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0c0b09; --ivory: #f1ede3; --ivory-dim: rgba(241,237,227,0.62);
+  --muted: rgba(241,237,227,0.52); --gold: #c9a35f; --gold-hi: #e6c884;
+  --gold-dim: rgba(201,163,95,0.45); --line: rgba(241,237,227,0.11);
+  --serif: 'Fraunces', Georgia, serif; --mono: 'JetBrains Mono', monospace;
+}
+body {
+  font-family: var(--mono); background: var(--bg); color: var(--ivory);
+  min-height: 100svh; display: flex; align-items: center; justify-content: center;
+  padding: 24px; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--gold); color: #0c0b09; }
+.wrap { max-width: 560px; width: 100%; }
+.term {
+  border: 1px solid var(--line); border-radius: 4px;
+  background: rgba(241,237,227,0.015);
+}
+.term-head {
+  display: flex; align-items: center; gap: 6px;
+  padding: 12px 16px; border-bottom: 1px solid var(--line);
+  font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--gold-dim); }
+.dot:first-child { background: var(--gold-dim); }
+.term-head span:last-child { margin-left: 8px; }
+.term-body { padding: 22px 20px 26px; font-size: 0.74rem; line-height: 2.3; color: var(--ivory-dim); }
+.p { color: var(--gold); margin-right: 8px; }
+.err { color: #e07a5f; }
+.ok { color: var(--gold-hi); }
+h1 {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(2.6rem, 9vw, 4.4rem); line-height: 1.05;
+  letter-spacing: -0.01em; margin: 34px 0 12px;
+}
+h1 em { font-style: italic; color: var(--gold); }
+.sub { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); line-height: 2; }
+.home {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 34px;
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.22em;
+  text-transform: uppercase; text-decoration: none;
+  color: #0c0b09; background: var(--gold);
+  padding: 16px 32px; border-radius: 100px; border: 1px solid var(--gold);
+  transition: background 0.35s, border-color 0.35s;
+}
+.home:hover { background: var(--gold-hi); border-color: var(--gold-hi); }
+.home:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="term" aria-hidden="true">
+    <div class="term-head">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span>soc@msaleh:~/investigate</span>
+    </div>
+    <div class="term-body">
+      <div><span class="p">$</span>locate requested-page</div>
+      <div><span class="err">✗ ERROR 404 — resource not found</span></div>
+      <div><span class="p">$</span>analyze threat-level</div>
+      <div><span class="ok">✓ no threat detected — just a missing page</span></div>
+    </div>
+  </div>
+  <h1>Threat <em>not found.</em></h1>
+  <p class="sub">The page you're looking for doesn't exist or has been moved.</p>
+  <a class="home" href="/">← Return home</a>
+</main>
+</body>
+</html>
