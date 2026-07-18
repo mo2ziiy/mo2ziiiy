@@ -292,6 +292,7 @@ header.scrolled {
 .menu-links li:nth-child(5) a { transition-delay: 0.36s; }
 .menu-links li:nth-child(6) a { transition-delay: 0.42s; }
 .menu-links li:nth-child(7) a { transition-delay: 0.48s; }
+.menu-links li:nth-child(8) a { transition-delay: 0.54s; }
 .menu-links a:hover { color: var(--gold-hi); font-style: italic; }
 .menu-links .mi {
   font-family: var(--mono); font-size: 0.7rem; color: var(--gold);
@@ -820,6 +821,63 @@ body.loaded .hero-term { opacity: 1; transform: translateY(0); }
 }
 .labs-note em { color: var(--gold); font-style: normal; }
 
+/* ---------- HACKATHONS & EVENTS ---------- */
+.events-intro { color: var(--ivory-dim); font-size: 1rem; line-height: 1.85; max-width: 58ch; margin-bottom: clamp(36px, 5vw, 60px); }
+.events-intro strong { color: var(--ivory); font-weight: 500; }
+.event-card {
+  display: grid; grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 70px); align-items: start;
+  border: 1px solid var(--gold-dim); border-radius: 3px;
+  padding: clamp(28px, 4.5vw, 54px);
+  background: linear-gradient(115deg, rgba(201,163,95,0.07), transparent 55%);
+  position: relative; overflow: hidden;
+}
+.event-card::before {
+  content: '✦'; position: absolute; top: -30px; right: -10px;
+  font-size: clamp(7rem, 14vw, 11rem); line-height: 1;
+  color: rgba(201,163,95,0.05); pointer-events: none;
+}
+.event-rank { text-align: left; }
+.event-rank-num {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  font-size: clamp(4rem, 8vw, 6.5rem); line-height: 0.9;
+  color: transparent; -webkit-text-stroke: 1px var(--gold);
+  display: block;
+}
+.event-rank-num sup { font-size: 0.32em; -webkit-text-stroke: 1px var(--gold); vertical-align: super; }
+.event-rank-label {
+  display: block; margin-top: 14px;
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--gold);
+}
+.event-rank-sub {
+  display: block; margin-top: 8px;
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted); line-height: 1.9;
+}
+.event-cat {
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.26em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
+}
+.event-title {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(1.7rem, 3.4vw, 2.7rem); line-height: 1.12;
+  letter-spacing: -0.01em; margin-bottom: 18px;
+}
+.event-title em { font-style: italic; color: var(--gold); }
+.event-desc { color: var(--ivory-dim); font-size: 0.95rem; line-height: 1.85; max-width: 56ch; }
+.event-desc strong { color: var(--ivory); font-weight: 500; }
+.event-meta {
+  display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 24px;
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+}
+.event-meta span::before { content: '· '; color: var(--gold-dim); }
+.event-tracks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+@media (max-width: 860px) {
+  .event-card { grid-template-columns: 1fr; gap: 26px; }
+}
+
 /* ---------- TESTIMONIALS ---------- */
 .voices {
   border-top: 1px solid var(--line-soft);
@@ -1042,7 +1100,7 @@ footer .f-brand em { color: var(--gold); }
 @media print {
   header, footer, .grain, .ambient, .loader, .cursor-dot, .cursor-ring,
   .scroll-progress, .menu-overlay, .lightbox, .skip-link, .hero, .marquee,
-  #about, #expertise, #works, #labs, #credentials, #contact, .voices,
+  #about, #expertise, #works, #labs, #credentials, #events, #contact, .voices,
   .resume-head .btn-gold { display: none !important; }
   body { background: #fff; color: #111; }
   #resume {
@@ -1093,6 +1151,7 @@ footer .f-brand em { color: var(--gold); }
     <a href="#labs">Labs</a>
     <a href="#resume">Resume</a>
     <a href="#credentials">Credentials</a>
+    <a href="#events">Events</a>
     <a href="#contact" class="nav-cta">Let's Talk</a>
   </nav>
   <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
@@ -1109,7 +1168,8 @@ footer .f-brand em { color: var(--gold); }
     <li><a href="#labs"><span class="mi">04</span> Labs</a></li>
     <li><a href="#resume"><span class="mi">05</span> Resume</a></li>
     <li><a href="#credentials"><span class="mi">06</span> Credentials</a></li>
-    <li><a href="#contact"><span class="mi">07</span> Contact</a></li>
+    <li><a href="#events"><span class="mi">07</span> Events</a></li>
+    <li><a href="#contact"><span class="mi">08</span> Contact</a></li>
   </ul>
   <div class="menu-foot">
     <span>Damietta, Egypt</span>
@@ -1564,6 +1624,50 @@ footer .f-brand em { color: var(--gold); }
     </div>
   </section>
 
+  <!-- HACKATHONS & EVENTS -->
+  <section class="section" id="events" style="padding-top:0;">
+    <div class="sec-head rv">
+      <span class="sec-num">07</span>
+      <h2 class="sec-title">Hackathons &amp; <em>events</em></h2>
+      <span class="sec-rule"></span>
+    </div>
+
+    <p class="events-intro rv">
+      Competing, building, and representing my university at <strong>national hackathons and innovation events</strong> —
+      where ideas turn into working projects under real deadlines.
+    </p>
+
+    <article class="event-card rv">
+      <div class="event-rank">
+        <span class="event-rank-num">3<sup>rd</sup></span>
+        <span class="event-rank-label">Place — National</span>
+        <span class="event-rank-sub">Among 20 universities<br>across Egypt</span>
+      </div>
+      <div>
+        <div class="event-cat">Hackathon · Tanta University · 22 — 25 Aug 2025</div>
+        <h3 class="event-title">First Sustainable Innovation <em>Summit</em></h3>
+        <p class="event-desc">
+          Represented <strong>Horus University</strong> at the First Sustainable Innovation Summit, hosted by Tanta University.
+          Our team secured <strong>third place among 20 governmental, private, and national universities</strong> from
+          across Egypt. The faculty competed through two tracks — <strong>Artificial Intelligence</strong>, with the
+          <strong>ZeroThreat</strong> and <strong>BrainFuel</strong> projects, and <strong>Business Administration</strong>.
+        </p>
+        <div class="event-meta">
+          <span>Tanta University</span>
+          <span>20 Universities</span>
+          <span>Team Award</span>
+        </div>
+        <div class="event-tracks">
+          <span class="chip">Artificial Intelligence</span><span class="chip">ZeroThreat</span><span class="chip">BrainFuel</span><span class="chip">Business Administration</span><span class="chip">Sustainability</span>
+        </div>
+      </div>
+    </article>
+
+    <p class="labs-note rv">
+      <em>✦</em> More hackathons, competitions &amp; events on the way — this list keeps growing.
+    </p>
+  </section>
+
   <!-- TESTIMONIALS -->
   <aside class="voices" aria-label="Testimonials">
     <div class="voices-carousel rv">
@@ -1625,7 +1729,7 @@ footer .f-brand em { color: var(--gold); }
   <!-- CONTACT -->
   <section class="section" id="contact">
     <div class="sec-head rv">
-      <span class="sec-num">07</span>
+      <span class="sec-num">08</span>
       <h2 class="sec-title">Contact</h2>
       <span class="sec-rule"></span>
     </div>
