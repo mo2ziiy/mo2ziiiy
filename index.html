@@ -38,7 +38,8 @@
   "name": "Mohamed Saleh",
   "url": "https://mohamedmsaleh.netlify.app/",
   "image": "https://mohamedmsaleh.netlify.app/og-preview.png",
-  "jobTitle": "Program Director",
+  "jobTitle": "Deputy of the Company",
+  "logo": "https://mohamedmsaleh.netlify.app/assets/logo.png",
   "worksFor": { "@type": "Organization", "name": "Arabian Academy" },
   "description": "Cybersecurity and AI student at Horus University focused on SOC operations, incident response, and DFIR, and a frontend developer working with React and TypeScript.",
   "affiliation": { "@type": "CollegeOrUniversity", "name": "Horus University" },
@@ -52,7 +53,9 @@
 </script>
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230c0b09'/><text x='50%25' y='55%25' font-family='Georgia,serif' font-style='italic' font-weight='600' font-size='15' fill='%23c9a35f' text-anchor='middle' dominant-baseline='middle'>ms</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -223,6 +226,28 @@ header.scrolled {
   letter-spacing: 0.01em; position: relative; z-index: 4600;
 }
 .brand em { color: var(--gold); font-style: italic; }
+.brand { display: inline-flex; align-items: center; gap: 12px; }
+.brand-logo {
+  width: 34px; height: 34px; flex-shrink: 0;
+  transition: transform 0.6s var(--ease-out), filter 0.4s;
+}
+.brand:hover .brand-logo { transform: rotate(-6deg) scale(1.06); filter: drop-shadow(0 0 10px rgba(201,163,95,0.35)); }
+header.scrolled .brand-logo { width: 30px; height: 30px; }
+
+/* logo placements */
+.loader-logo {
+  width: clamp(56px, 9vw, 78px); height: auto; margin: 0 auto 22px;
+  opacity: 0; transform: translateY(10px) scale(0.92);
+  animation: logoIn 1s 0.05s var(--ease-out) forwards;
+}
+@keyframes logoIn { to { opacity: 1; transform: none; } }
+.menu-logo {
+  position: absolute; right: var(--pad); top: 50%; transform: translateY(-50%);
+  width: clamp(160px, 30vw, 380px); height: auto;
+  opacity: 0.07; pointer-events: none;
+}
+.f-logo { width: 22px; height: 22px; display: inline-block; vertical-align: -5px; margin-right: 10px; }
+.r-logo { width: 38px; height: 38px; display: inline-block; vertical-align: -7px; margin-right: 14px; }
 .nav-desktop { display: flex; align-items: center; gap: 34px; }
 .nav-desktop a {
   font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.22em;
@@ -742,14 +767,6 @@ body.loaded .hero-term { opacity: 1; transform: translateY(0); }
 }
 .r-item ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold-dim); }
 .r-skill-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-.r-award {
-  border: 1px solid var(--gold-dim); border-radius: 2px;
-  padding: 22px 24px; margin-top: 6px;
-  background: linear-gradient(115deg, rgba(201,163,95,0.06), transparent 60%);
-}
-.r-award .a-title { font-family: var(--serif); font-size: 1.05rem; }
-.r-award .a-title em { color: var(--gold-hi); font-style: italic; }
-.r-award .a-meta { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
 
 /* ---------- CREDENTIALS ---------- */
 .cred-table { border-top: 1px solid var(--line); }
@@ -874,8 +891,55 @@ body.loaded .hero-term { opacity: 1; transform: translateY(0); }
 }
 .event-meta span::before { content: '· '; color: var(--gold-dim); }
 .event-tracks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.event-card { cursor: pointer; transition: border-color 0.5s, background 0.5s; }
+.event-card:hover { border-color: rgba(201,163,95,0.7); }
+.event-open { margin-top: 28px; background: none; border: none; cursor: pointer; }
+
+/* event photo mosaic — always visible, click any to enlarge */
+.event-gallery {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(110px, 12vw, 190px);
+  gap: clamp(8px, 1vw, 14px);
+  margin-top: clamp(4px, 1vw, 10px);
+}
+.eg-item {
+  position: relative; overflow: hidden; padding: 0; margin: 0;
+  border: 1px solid var(--line); border-radius: 2px;
+  background: var(--surface); cursor: zoom-in;
+}
+.eg-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.eg-item:nth-child(4), .eg-item:nth-child(5), .eg-item:nth-child(6) { grid-column: span 2; }
+.eg-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(0.8) brightness(0.88);
+  transform: scale(1.03);
+  transition: transform 1s var(--ease-out), filter 0.6s ease;
+}
+.eg-item::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(12,11,9,0.55), transparent 50%);
+  transition: opacity 0.5s;
+}
+.eg-item::before {
+  content: '+'; position: absolute; right: 10px; bottom: 8px; z-index: 1;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--gold-dim); color: var(--gold-hi);
+  font-family: var(--mono); font-size: 0.9rem; line-height: 26px; text-align: center;
+  background: rgba(12,11,9,0.55);
+  opacity: 0; transform: scale(0.8);
+  transition: opacity 0.4s, transform 0.4s var(--ease-out);
+}
+.eg-item:hover img, .eg-item:focus-visible img { transform: scale(1); filter: saturate(1) brightness(1); }
+.eg-item:hover::after { opacity: 0.3; }
+.eg-item:hover::before, .eg-item:focus-visible::before { opacity: 1; transform: scale(1); }
+
 @media (max-width: 860px) {
   .event-card { grid-template-columns: 1fr; gap: 26px; }
+  .event-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: clamp(110px, 28vw, 200px); }
+  .eg-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .eg-item:nth-child(4), .eg-item:nth-child(5) { grid-column: span 1; }
+  .eg-item::before { opacity: 1; transform: none; }
 }
 
 /* ---------- TESTIMONIALS ---------- */
@@ -1038,8 +1102,31 @@ footer .f-brand em { color: var(--gold); }
 .lightbox-cap {
   position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%);
   font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--muted); white-space: nowrap;
+  text-transform: uppercase; color: var(--muted);
+  width: max-content; max-width: calc(100vw - 40px); text-align: center; line-height: 1.9;
 }
+.lightbox.is-gallery img {
+  max-width: min(1200px, 90vw); max-height: 74vh; width: auto; height: auto;
+  object-fit: contain; transition: transform 0.6s var(--ease-out), opacity 0.25s ease;
+}
+.lightbox img.swapping { opacity: 0; }
+.lightbox-count {
+  position: absolute; top: 38px; left: var(--pad);
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.24em; color: var(--gold);
+}
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(12,11,9,0.6); border: 1px solid var(--line);
+  color: var(--ivory-dim); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.35s, color 0.35s;
+}
+.lightbox-nav:hover { border-color: var(--gold); color: var(--gold); }
+.lightbox-nav svg { width: 18px; height: 18px; }
+.lightbox-nav.prev { left: clamp(10px, 3vw, 40px); }
+.lightbox-nav.next { right: clamp(10px, 3vw, 40px); }
+.lightbox:not(.is-gallery) .lightbox-nav, .lightbox:not(.is-gallery) .lightbox-count { display: none; }
 .lightbox-x {
   position: absolute; top: 26px; right: 30px;
   background: none; border: 1px solid var(--line); border-radius: 50%;
@@ -1051,12 +1138,28 @@ footer .f-brand em { color: var(--gold); }
 .lightbox-x svg { width: 15px; height: 15px; }
 
 /* ---------- RESPONSIVE ---------- */
+@media (max-width: 1280px) {
+  .nav-desktop { gap: 24px; }
+  .nav-desktop a { letter-spacing: 0.18em; }
+}
+@media (max-width: 1100px) {
+  .nav-desktop { display: none; }
+  .burger { display: block; }
+}
+@media (max-width: 1024px) and (min-width: 761px) {
+  .voices-track .voice { flex: 0 0 calc((100% - clamp(30px, 4vw, 60px)) / 2) !important; }
+}
+@media (max-height: 640px) {
+  .menu-overlay { justify-content: flex-start; overflow-y: auto; padding-top: 90px; padding-bottom: 90px; }
+  .menu-links a { font-size: clamp(1.6rem, 6vh, 2.6rem); }
+  .menu-foot { position: static; margin-top: 30px; }
+}
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; }
   .hero-portrait { justify-self: start; width: min(300px, 70vw); order: -1; margin-bottom: 8px; display: none; }
-  .about-grid { grid-template-columns: 1fr; }
-  .resume-cols { grid-template-columns: 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: minmax(0, 1fr); }
+  .resume-cols { grid-template-columns: minmax(0, 1fr); }
+  .contact-grid { grid-template-columns: minmax(0, 1fr); }
   .exp-row { grid-template-columns: 40px 1fr 32px; }
   .exp-body { grid-column: 2; margin-top: 14px; }
   .exp-arrow { grid-row: 1; grid-column: 3; }
@@ -1069,8 +1172,6 @@ footer .f-brand em { color: var(--gold); }
   .lab-status { grid-row: 1; grid-column: 3; }
 }
 @media (max-width: 760px) {
-  .nav-desktop { display: none; }
-  .burger { display: block; }
   .cred-row { grid-template-columns: 34px 1fr 70px; }
   .cred-issuer { grid-column: 2; grid-row: 2; }
   .cred-date { display: none; }
@@ -1078,7 +1179,27 @@ footer .f-brand em { color: var(--gold); }
   .lab-tools { grid-column: 2; }
   .lab-status { grid-row: auto; grid-column: 2; justify-self: start; padding-top: 4px; }
   .hero { padding-top: 120px; }
-  .hero-foot { font-size: 0.54rem; }
+  .hero-role-line { min-height: 2.6em; line-height: 1.3; }
+  .hero-eyebrow { flex-wrap: wrap; gap: 10px 14px; }
+  .hero-eyebrow > span { white-space: nowrap; }
+  .hero-eyebrow .dash { width: 26px; }
+  .hero-title .row .tail { display: block; margin: 14px 0 0 2px; vertical-align: baseline; }
+  .hero-foot { font-size: 0.54rem; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .menu-logo { top: auto; bottom: 90px; transform: none; width: 150px; }
+  .event-card { padding: 24px 20px; }
+  .event-rank { display: grid; grid-template-columns: auto 1fr; column-gap: 20px; align-items: center; }
+  .event-rank-num { grid-row: span 2; }
+  .event-rank-label { margin-top: 0; }
+  .event-rank-sub br { display: none; }
+  .lightbox-nav { top: auto; bottom: 96px; transform: none; width: 46px; height: 46px; }
+  .lightbox-nav.prev { left: calc(50% - 58px); }
+  .lightbox-nav.next { right: calc(50% - 58px); }
+  .lightbox-x { top: 20px; right: 20px; }
+  .lightbox-count { top: 36px; }
+  .lightbox-cap { bottom: 30px; letter-spacing: 0.18em; }
+  .lightbox.is-gallery img { max-width: calc(100vw - 24px); max-height: 62vh; }
+  .sec-head { gap: 14px; }
+  .contact-email { font-size: 1rem; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .form-row2 { grid-template-columns: 1fr; gap: 0; }
   footer { flex-direction: column; gap: 20px; text-align: center; }
@@ -1086,6 +1207,8 @@ footer .f-brand em { color: var(--gold); }
 @media (max-width: 420px) {
   :root { --pad: 20px; }
   .cur-row { grid-template-columns: 1fr; gap: 6px; }
+  .stat { padding: 20px 16px 18px; }
+  .stat-label { letter-spacing: 0.16em; }
   .hero-ctas { gap: 18px; }
   .btn-gold { padding: 15px 26px; }
 }
@@ -1098,6 +1221,7 @@ footer .f-brand em { color: var(--gold); }
 
 /* ---------- PRINT (Resume section only) ---------- */
 @media print {
+  .r-logo { filter: brightness(0.55) contrast(1.4); width: 30px; height: 30px; }
   header, footer, .grain, .ambient, .loader, .cursor-dot, .cursor-ring,
   .scroll-progress, .menu-overlay, .lightbox, .skip-link, .hero, .marquee,
   #about, #expertise, #works, #labs, #credentials, #events, #contact, .voices,
@@ -1112,7 +1236,7 @@ footer .f-brand em { color: var(--gold); }
   }
   .rv { opacity: 1 !important; transform: none !important; }
   .resume-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
-  .r-item, .r-block, .r-award { break-inside: avoid; }
+  .r-item, .r-block { break-inside: avoid; }
   .chip { border-color: #ccc; color: #333; }
 }
 </style>
@@ -1126,6 +1250,7 @@ footer .f-brand em { color: var(--gold); }
 <!-- LOADER -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-inner">
+    <img class="loader-logo" src="assets/logo.png" alt="" width="512" height="512">
     <div class="loader-name"><span>Mohamed <em>Saleh</em></span></div>
     <div class="loader-line" id="loaderLine"></div>
   </div>
@@ -1143,7 +1268,7 @@ footer .f-brand em { color: var(--gold); }
 <!-- NAV -->
 <a href="#top" class="skip-link">Skip to main content</a>
 <header id="siteHeader">
-  <a href="#top" class="brand">m<em>.</em>saleh</a>
+  <a href="#top" class="brand" aria-label="Mohamed Saleh — home"><img class="brand-logo" src="assets/logo.png" alt="" width="512" height="512"><span class="brand-text">m<em>.</em>saleh</span></a>
   <nav class="nav-desktop" aria-label="Primary">
     <a href="#about">About</a>
     <a href="#expertise">Expertise</a>
@@ -1171,6 +1296,7 @@ footer .f-brand em { color: var(--gold); }
     <li><a href="#events"><span class="mi">07</span> Events</a></li>
     <li><a href="#contact"><span class="mi">08</span> Contact</a></li>
   </ul>
+  <img class="menu-logo" src="assets/logo.png" alt="" width="512" height="512">
   <div class="menu-foot">
     <span>Damietta, Egypt</span>
     <div style="display:flex;gap:26px;">
@@ -1208,7 +1334,7 @@ footer .f-brand em { color: var(--gold); }
     <div class="hero-grid">
       <div>
         <div class="hero-role-line">
-          <span class="sr-only">Cybersecurity (SOC &amp; DFIR) and AI Student · Frontend Developer · Program Director at Arabian Academy</span>
+          <span class="sr-only">Cybersecurity (SOC &amp; DFIR) and AI Student · Frontend Developer · Deputy of the Company at Arabian Academy</span>
           <span aria-hidden="true">— <span class="rot" id="roleRotator">SOC &amp; DFIR Student</span></span>
         </div>
         <p class="hero-desc">
@@ -1468,7 +1594,7 @@ footer .f-brand em { color: var(--gold); }
 
     <div class="resume-head rv">
       <div class="resume-id">
-        <div class="r-name">Mohamed Saleh</div>
+        <div class="r-name"><img class="r-logo" src="assets/logo.png" alt="" width="512" height="512">Mohamed Saleh</div>
         <div class="r-tag">Cybersecurity, SOC &amp; AI Student · Frontend Developer</div>
         <div class="resume-chips">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.72h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +20 100 108 5658</span>
@@ -1506,21 +1632,13 @@ footer .f-brand em { color: var(--gold); }
             <span class="chip">Prompt Engineering</span>
           </div>
         </div>
-
-        <div class="r-block">
-          <div class="r-block-title">Honors &amp; Awards</div>
-          <div class="r-award">
-            <div class="a-title">Third Place Award — <em>First Sustainable Innovation Summit 2025</em></div>
-            <div class="a-meta">Recognized for developing an innovative project focused on sustainability and practical technological solutions</div>
-          </div>
-        </div>
       </div>
 
       <div class="rv rv-d1">
         <div class="r-block">
           <div class="r-block-title">Experience</div>
           <div class="r-item">
-            <div class="r-item-title">Program Director</div>
+            <div class="r-item-title">Deputy of the Company</div>
             <div class="r-item-meta">Arabian Academy · 2026 — Present</div>
             <ul>
               <li>Planning, organizing &amp; managing training programs</li>
@@ -1641,7 +1759,7 @@ footer .f-brand em { color: var(--gold); }
       <div class="event-rank">
         <span class="event-rank-num">3<sup>rd</sup></span>
         <span class="event-rank-label">Place — National</span>
-        <span class="event-rank-sub">Among 20 universities<br>across Egypt</span>
+        <span class="event-rank-sub">Among 20 universities <br>across Egypt</span>
       </div>
       <div>
         <div class="event-cat">Hackathon · Tanta University · 22 — 25 Aug 2025</div>
@@ -1660,6 +1778,31 @@ footer .f-brand em { color: var(--gold); }
         <div class="event-tracks">
           <span class="chip">Artificial Intelligence</span><span class="chip">ZeroThreat</span><span class="chip">BrainFuel</span><span class="chip">Business Administration</span><span class="chip">Sustainability</span>
         </div>
+        <button type="button" class="btn-line event-open" data-gallery-open="0">
+          View photos (6)
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </button>
+      </div>
+
+      <div class="event-gallery" id="eventGallery" aria-label="Event photos">
+        <button type="button" class="eg-item" data-gallery-open="0" data-full="assets/events/01-summit.jpg" data-cap="Arriving at the First Sustainable Innovation Summit — Tanta University">
+          <img src="assets/events/01-summit-sm.jpg" alt="Horus University team holding the university flag in front of the summit banner" width="640" height="360" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="eg-item" data-gallery-open="1" data-full="assets/events/02-booth.jpg" data-cap="Our booth — BrainFuel &amp; ZeroThreat posters">
+          <img src="assets/events/02-booth-sm.jpg" alt="Team standing at the booth with BrainFuel and ZeroThreat posters" width="640" height="360" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="eg-item" data-gallery-open="2" data-full="assets/events/03-booth-team.jpg" data-cap="Presenting ZeroThreat &amp; BrainFuel to visitors">
+          <img src="assets/events/03-booth-team-sm.jpg" alt="Selfie with the team at the project booth with two laptops running the demos" width="640" height="360" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="eg-item" data-gallery-open="3" data-full="assets/events/04-stage.jpg" data-cap="On stage at the closing ceremony">
+          <img src="assets/events/04-stage-sm.jpg" alt="Team with faculty and officials on stage holding the Horus University flag" width="640" height="480" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="eg-item" data-gallery-open="4" data-full="assets/events/05-award.jpg" data-cap="Receiving the third-place award">
+          <img src="assets/events/05-award-sm.jpg" alt="Team holding the award plaque and the Horus University flag" width="640" height="480" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="eg-item" data-gallery-open="5" data-full="assets/events/06-certificates.jpg" data-cap="Certificates of recognition at Horus University">
+          <img src="assets/events/06-certificates-sm.jpg" alt="Team members holding their certificates with university leadership" width="640" height="360" loading="lazy" decoding="async">
+        </button>
       </div>
     </article>
 
@@ -1708,7 +1851,7 @@ footer .f-brand em { color: var(--gold); }
           </figcaption>
         </figure>
         <figure class="voice">
-          <blockquote>As a program director, Mohamed keeps everything organized and everyone motivated. Sessions run on time, problems get solved quietly, and the whole experience feels professional.</blockquote>
+          <blockquote>As deputy of the company, Mohamed keeps everything organized and everyone motivated. Sessions run on time, problems get solved quietly, and the whole experience feels professional.</blockquote>
           <figcaption>
             <div class="v-name">Ziad E.</div>
             <div class="v-role">Team Member · Arabian Academy</div>
@@ -1790,7 +1933,7 @@ footer .f-brand em { color: var(--gold); }
 
 <!-- FOOTER -->
 <footer>
-  <span class="f-brand">m<em>.</em>saleh</span>
+  <span class="f-brand"><img class="f-logo" src="assets/logo.png" alt="" width="512" height="512">m<em>.</em>saleh</span>
   <span>© 2026 Mohamed Saleh — All rights reserved</span>
   <button class="to-top" id="toTop">
     Back to top
@@ -1799,9 +1942,16 @@ footer .f-brand em { color: var(--gold); }
 </footer>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Profile photo">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <img src="portrait.jpeg" alt="Mohamed Saleh" id="lightboxImg">
-  <div class="lightbox-cap">Mohamed Saleh — SOC · Frontend</div>
+  <div class="lightbox-cap" id="lightboxCap">Mohamed Saleh — SOC · Frontend</div>
+  <div class="lightbox-count" id="lightboxCount" aria-live="polite"></div>
+  <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  </button>
+  <button class="lightbox-nav next" id="lightboxNext" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </button>
   <button class="lightbox-x" id="lightboxX" aria-label="Close">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
   </button>
@@ -1852,10 +2002,10 @@ footer .f-brand em { color: var(--gold); }
       requestAnimationFrame(loop);
     })();
     document.addEventListener('mouseover', function(e) {
-      if (e.target.closest('a, button, .exp-row, .cred-row, .hero-portrait')) ringC.classList.add('hovering');
+      if (e.target.closest('a, button, .exp-row, .cred-row, .hero-portrait, .event-card')) ringC.classList.add('hovering');
     });
     document.addEventListener('mouseout', function(e) {
-      if (e.target.closest('a, button, .exp-row, .cred-row, .hero-portrait')) ringC.classList.remove('hovering');
+      if (e.target.closest('a, button, .exp-row, .cred-row, .hero-portrait, .event-card')) ringC.classList.remove('hovering');
     });
     document.addEventListener('mouseleave', function() { dot.style.opacity = '0'; ringC.style.opacity = '0'; });
     document.addEventListener('mouseenter', function() { if (cursorOn) { dot.style.opacity = '1'; ringC.style.opacity = '1'; } });
@@ -1894,7 +2044,7 @@ footer .f-brand em { color: var(--gold); }
   });
 
   /* ===== ROLE ROTATOR ===== */
-  var roles = ['SOC & DFIR Student', 'Frontend Developer', 'Cybersecurity & AI Student', 'Program Director — Arabian Academy'];
+  var roles = ['SOC & DFIR Student', 'Frontend Developer', 'Cybersecurity & AI Student', 'Deputy of the Company — Arabian Academy'];
   var rotEl = document.getElementById('roleRotator');
   var ri = 0, ci = roles[0].length, deleting = false;
   function typeLoop() {
@@ -2008,17 +2158,78 @@ footer .f-brand em { color: var(--gold); }
 
   /* ===== LIGHTBOX ===== */
   var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lightboxImg');
+  var lbCap = document.getElementById('lightboxCap');
+  var lbCount = document.getElementById('lightboxCount');
   var portraitEl = document.getElementById('portraitImg');
-  function openLb() { lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  portraitEl.addEventListener('click', openLb);
+  var lastFocus = null;
+  function showLb() {
+    lastFocus = document.activeElement;
+    lb.classList.add('open'); document.body.style.overflow = 'hidden';
+    document.getElementById('lightboxX').focus({ preventScroll: true });
+  }
+  function openPortrait() {
+    lb.classList.remove('is-gallery');
+    lbImg.src = 'portrait.jpeg'; lbImg.alt = 'Mohamed Saleh';
+    lbCap.textContent = 'Mohamed Saleh — SOC · Frontend';
+    showLb();
+  }
+  portraitEl.addEventListener('click', openPortrait);
   portraitEl.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPortrait(); }
   });
-  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  function closeLb() {
+    if (!lb.classList.contains('open')) return;
+    lb.classList.remove('open'); document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
   document.getElementById('lightboxX').addEventListener('click', closeLb);
   lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
+
+  /* ===== EVENT GALLERY ===== */
+  var gItems = Array.prototype.slice.call(document.querySelectorAll('.eg-item'));
+  var gIndex = 0;
+  function gShow(i, animate) {
+    gIndex = (i + gItems.length) % gItems.length;
+    var it = gItems[gIndex], thumb = it.querySelector('img');
+    var apply = function() {
+      lbImg.src = it.getAttribute('data-full'); lbImg.alt = thumb.alt;
+      lbCap.textContent = it.getAttribute('data-cap');
+      lbCount.textContent = String(gIndex + 1).padStart(2, '0') + ' / ' + String(gItems.length).padStart(2, '0');
+      lbImg.classList.remove('swapping');
+    };
+    if (animate && !reducedMotion) { lbImg.classList.add('swapping'); setTimeout(apply, 180); } else apply();
+  }
+  function openGallery(i) {
+    lb.classList.add('is-gallery');
+    gShow(i, false); showLb();
+  }
+  document.querySelectorAll('[data-gallery-open]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openGallery(parseInt(btn.getAttribute('data-gallery-open'), 10));
+    });
+  });
+  var eventCard = document.querySelector('.event-card');
+  if (eventCard) eventCard.addEventListener('click', function(e) {
+    if (!e.target.closest('a, button')) openGallery(0);
+  });
+  document.getElementById('lightboxPrev').addEventListener('click', function() { gShow(gIndex - 1, true); });
+  document.getElementById('lightboxNext').addEventListener('click', function() { gShow(gIndex + 1, true); });
+  var tx = null;
+  lb.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function(e) {
+    if (tx === null || !lb.classList.contains('is-gallery')) return;
+    var dx = e.changedTouches[0].clientX - tx; tx = null;
+    if (Math.abs(dx) > 45) gShow(gIndex + (dx < 0 ? 1 : -1), true);
+  }, { passive: true });
+
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { closeLb(); if (menuOpen) setMenu(false); }
+    if (lb.classList.contains('open') && lb.classList.contains('is-gallery')) {
+      if (e.key === 'ArrowRight') gShow(gIndex + 1, true);
+      if (e.key === 'ArrowLeft') gShow(gIndex - 1, true);
+    }
   });
 
   /* ===== CONTACT FORM (Formspree) ===== */
@@ -2067,7 +2278,8 @@ footer .f-brand em { color: var(--gold); }
     var vSlides = vTrack.children;
     var vIndex = 0;
     var vPerView = function() {
-      return window.matchMedia('(max-width: 1024px)').matches ? 1 : 3;
+      if (window.matchMedia('(max-width: 760px)').matches) return 1;
+      return window.matchMedia('(max-width: 1024px)').matches ? 2 : 3;
     };
     var vMax = function() { return Math.max(0, vSlides.length - vPerView()); };
     var vUpdate = function() {
