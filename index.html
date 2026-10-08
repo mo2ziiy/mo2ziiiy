@@ -2724,9 +2724,8 @@ footer .f-brand em { color: var(--gold); }
     var vMax = function() { return Math.max(0, vSlides.length - vPerView()); };
     var vUpdate = function() {
       if (vIndex > vMax()) vIndex = vMax();
-      var gap = parseFloat(getComputedStyle(vTrack).gap) || 0;
-      var w = vSlides[0].getBoundingClientRect().width;
-      vTrack.style.transform = 'translateX(' + (-vIndex * (w + gap)) + 'px)';
+      // offsetLeft ignores the hidden cards' scale(), so the active card lines up exactly
+      vTrack.style.transform = 'translateX(' + (vSlides[0].offsetLeft - vSlides[vIndex].offsetLeft) + 'px)';
       var per = vPerView();
       Array.prototype.forEach.call(vSlides, function(sl, i) {
         var shown = i >= vIndex && i < vIndex + per;
@@ -2746,6 +2745,18 @@ footer .f-brand em { color: var(--gold); }
       vIndex = vIndex >= vMax() ? 0 : vIndex + 1;
       vUpdate();
     });
+    // swipe left / right on touch screens
+    var vX = null, vY = 0;
+    vTrack.addEventListener('touchstart', function(e) {
+      vX = e.touches[0].clientX; vY = e.touches[0].clientY;
+    }, { passive: true });
+    vTrack.addEventListener('touchend', function(e) {
+      if (vX === null) return;
+      var dx = e.changedTouches[0].clientX - vX, dy = e.changedTouches[0].clientY - vY;
+      vX = null;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      document.getElementById(dx < 0 ? 'voicesNext' : 'voicesPrev').click();
+    }, { passive: true });
     window.addEventListener('resize', vUpdate);
     vUpdate();
   }
