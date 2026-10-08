@@ -97,7 +97,8 @@
 
   /* resume timeline: the beam grows and shrinks with scroll (both directions),
      a glowing tip rides its end, and each milestone lights up as the tip passes.
-     On phones the tip is pinned to the middle of the screen so it visibly follows you. */
+     The fill is spread over the whole time the timeline is on screen (enters near
+     the bottom, completes as it leaves near the top) so it never runs ahead of you. */
   var phone = window.matchMedia('(max-width: 760px)');
   gsap.utils.toArray('.r-timeline').forEach(function (tlEl) {
     var beam = tlEl.querySelector('.r-beam');
@@ -109,8 +110,8 @@
       scaleY: 1, ease: 'none', transformOrigin: 'top center',
       scrollTrigger: {
         trigger: tlEl,
-        start: function () { return phone.matches ? 'top 50%' : 'top 75%'; },
-        end: function () { return phone.matches ? 'bottom 50%' : 'bottom 55%'; },
+        start: 'top 85%',
+        end: 'bottom 30%',
         scrub: phone.matches ? 0.25 : 0.5,
         invalidateOnRefresh: true
       },

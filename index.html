@@ -692,7 +692,12 @@ main { position: relative; z-index: 1; }
   .hero-eyebrow .dash { width: 22px; }
   .hero-ctas { gap: 12px 22px; }
   .hero-ctas .btn-gold { flex: 1 1 100%; }
-  .hero-foot { flex-direction: column; align-items: flex-start; gap: 10px; }
+  /* keep the strip on one row like desktop, just tighter */
+  .hero-foot { flex-wrap: nowrap; gap: 12px; font-size: 0.6rem; letter-spacing: 0.08em; line-height: 1.5; }
+  .hero-foot > span:nth-child(2) { text-align: center; }
+  .hero-foot > span:last-child { text-align: right; }
+  .hero-scroll { gap: 7px; }
+  .hero-scroll .bar { height: 22px; }
 }
 
 /* ---------- MARQUEE ---------- */
@@ -1326,9 +1331,14 @@ a.cred-row:hover .cred-link .ico-arrow { transform: translate(2px, -2px); }
 .voices-carousel { overflow: hidden; padding: 4px; margin: -4px auto; }
 .voices-track {
   display: flex; gap: clamp(14px, 1.6vw, 22px);
-  transition: transform var(--dur-4) var(--ease-out);
+  transition: transform 0.9s cubic-bezier(0.45, 0, 0.2, 1);
 }
 .voices-track .voice { flex: 0 0 calc((100% - 2 * clamp(14px, 1.6vw, 22px)) / 3); min-width: 0; }
+/* cards leaving the view fade and settle back; incoming ones ease in */
+.voices-track .voice {
+  transition: border-color var(--dur-3) var(--ease-out), opacity 0.7s ease, transform 0.9s cubic-bezier(0.45, 0, 0.2, 1);
+}
+.voices-track .voice[aria-hidden="true"] { opacity: 0; transform: scale(0.96); }
 .voice {
   position: relative; margin: 0;
   display: flex; flex-direction: column;
@@ -1769,7 +1779,7 @@ footer .f-brand em { color: var(--gold); }
         </h1>
 
         <div class="hero-role-line" data-enter>
-          <span class="sr-only">Cybersecurity (SOC &amp; DFIR) and AI Student · Frontend Developer · Deputy of the Company at Arabian Academy</span>
+          <span class="sr-only">Cybersecurity (SOC &amp; DFIR) and AI Student · Frontend Developer · Deputy Director of Arabian Academy</span>
           <span aria-hidden="true">— <span class="rot" id="roleRotator">SOC &amp; DFIR Student</span></span>
         </div>
         <p class="hero-desc" data-enter>
@@ -2102,7 +2112,7 @@ footer .f-brand em { color: var(--gold); }
           <div class="r-block-title">Experience</div>
           <div class="r-timeline"><span class="r-track" aria-hidden="true"></span><span class="r-beam" aria-hidden="true"></span><span class="r-tip" aria-hidden="true"></span>
           <div class="r-item">
-            <div class="r-item-title">Deputy of the Company</div>
+            <div class="r-item-title">Deputy Director of the Company</div>
             <div class="r-item-meta">Arabian Academy · 2026 — Present</div>
             <ul>
               <li>Planning, organizing &amp; managing training programs</li>
@@ -2148,11 +2158,6 @@ footer .f-brand em { color: var(--gold); }
     </div>
 
     <div class="cred-table">
-      <div class="cred-row award-row rv">
-        <span class="cred-idx" aria-hidden="true">★</span>
-        <span class="cred-body"><span class="cred-name">Third Place — <em>First Sustainable Innovation Summit 2025</em></span><span class="cred-issuer">Innovation &amp; Sustainability</span></span>
-        <span class="cred-date">Award</span>
-      </div>
       <a class="cred-row rv spot" data-tilt="3" href="https://coursera.org/verify/ZV50PEV3KGM7" target="_blank" rel="noopener">
         <span class="spot-glow" aria-hidden="true"></span>
         <span class="cred-top"><span class="cred-idx">01</span><span class="cred-issuer">Google · Coursera</span></span>
@@ -2472,7 +2477,7 @@ footer .f-brand em { color: var(--gold); }
   });
 
   /* ===== ROLE ROTATOR ===== */
-  var roles = ['SOC & DFIR Student', 'Frontend Developer', 'Cybersecurity & AI Student', 'Deputy of the Company — Arabian Academy'];
+  var roles = ['SOC & DFIR Student', 'Frontend Developer', 'Cybersecurity & AI Student', 'Deputy Director of Arabian Academy'];
   var rotEl = document.getElementById('roleRotator');
   var ri = 0, ci = roles[0].length, deleting = false;
   function typeLoop() {
@@ -2764,7 +2769,7 @@ footer .f-brand em { color: var(--gold); }
 <!-- Motion + 3D (self-hosted in /vendor — no CDN, CSP stays 'self') -->
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
-<script src="js/motion.js" defer></script>
+<script src="js/motion.js?v=2" defer></script>
 <script type="module" src="js/hero3d.js"></script>
 </body>
 </html>
